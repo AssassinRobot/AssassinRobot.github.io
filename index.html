@@ -1,169 +1,227 @@
 <!DOCTYPE html>
-<html lang="eg">
-<head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta name="description" content="A personal math-themed portfolio with animated formulas and dark aesthetics." />
+      <title>Who Am I?</title>
+      <!-- Fonts & Icons -->
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+      <!-- KaTeX -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      <!-- Styles -->
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         body {
+         font-family: 'Roboto', sans-serif;
+         margin: 0;
+         padding: 0;
+         height: 100vh;
+         overflow: hidden;
+         background-color: #050505;
+         color: white;
+         }
+         #mathRain {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         z-index: 0;
+         pointer-events: none;
+         }
+         .math {
+         position: absolute;
+         color: #ffffffcc;
+         font-size: clamp(14px, 2.5vw, 22px);
+         opacity: 0;
+         filter: blur(1px);
+         will-change: transform, opacity;
+         }
+         @media (max-width: 600px) {
+         .math {
+         font-size: 16px;
+         filter: blur(0.5px);
+         }
+         }
+         .container {
+         position: relative;
+         z-index: 1;
+         background-color: rgba(255, 255, 255, 0.05);
+         backdrop-filter: blur(12px);
+         -webkit-backdrop-filter: blur(12px); 
+         border-radius: 16px;
+         border: 1px solid rgba(255, 255, 255, 0.15);
+         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+         padding: 30px;
+         text-align: center;
+         width: 520px;
+         margin: auto;
+         top: 50%;
+         transform: translateY(-50%);
+         background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+         }
+         @media (max-width: 600px) {
+         .container {
+         width: 98vw;
+         max-width: 345px;
+         padding: 18px 7px;
+         border-radius: 10px;
+         }.icon { font-size: 1.5em; }
+         h1 { font-size: 1.1em; }
+         li { font-size: 0.95em; }
+         }
+         /* اضافه کردن کلاس active برای حالت hover */
+li.active {
+    background-color: #3f205c; /* رنگ مشابه با حالت hover */
+}
 
-    <title>Who Am I?</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #050505;
-            position: relative;
-        }
+         h1 {
+         color: #afacac;
+         margin-bottom: 20px;
+         }
+         ul {
+         list-style-type: none;
+         padding: 0;
+         }
+         li {
+         background-color: #1b0130;
+         color: white;
+         margin: 10px 0;
+         padding: 10px;
+         border-radius: 5px;
+         transition: background-color 0.3s;
+         }
+         li:hover {
+         background-color: #3f205c;
+         }
+         a {
+         text-decoration: none;
+         color: black;
+         padding: 5px;
+         display: block;
+         }
+         a:hover {
+         color: blue;
+         }
+         .golang {
+         color: #afacac;
+         transition: color 0.3s;
+         }
+         .golang:hover {
+         color: blue;
+         }
+         .icon {
+         font-size: 1.5em;
+         color: #afacac;
+         }
+      </style>
+   </head>
+   <body>
+      <div id="mathRain"></div>
+      <div class="container">
+         <i class="fas fa-coffee icon"></i>
+         <h1><span class="golang">Golang</span> Backend Developer</h1>
+         <ul>
+            <li><a href="https://t.me/AmirTheNil" target="_blank"><i class="fab fa-telegram"></i> Telegram</a></li>
+            <li><a href="https://github.com/AssassinRobot" target="_blank"><i class="fab fa-github"></i> Github</a></li>
+            <li><a href="https://www.linkedin.com/in/amir-rafati-nil" target="_blank"><i class="fab fa-linkedin"></i> Linkedin</a></li>
+         </ul>
+      </div>
+      <script>
+         window.addEventListener("DOMContentLoaded", () => {
+           const formulas = [
+             "E=mc^2", "a^2 + b^2 = c^2", "F=ma", "\\int x^2 dx", "PV=nRT",
+             "V=IR", "y = mx + b", "\\frac{dy}{dx}", "\\nabla \\cdot \\vec{E} = \\frac{\\rho}{\\varepsilon_0}",
+             "\\psi(x,t) = Ae^{i(kx - \\omega t)}", "A = \\pi r^2", "\\int e^x dx = e^x + C",
+             "\\sum_{i=1}^n i = \\frac{n(n+1)}{2}", "pH = -\\log[H^+]", "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1",
+             "\\cos(2\\theta) = 1 - 2\\sin^2(\\theta)", "f(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}}e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}",
+             "\\vec{F} = q(\\vec{E} + \\vec{v} \\times \\vec{B})", "\\binom{n}{k} = \\frac{n!}{k!(n-k)!}",
+             "\\int_0^\\infty e^{-x} dx = 1", "\\sqrt{2}", "\\phi = \\frac{1 + \\sqrt{5}}{2}",
+             "\\mathbb{R}", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{C}", "\\mathbb{Q}",
+             "\\forall x \\in X, \\exists y \\leq \\epsilon", "\\Rightarrow", "\\leftrightarrow",
+             "\\theta(t) = \\theta_0 + \\omega t + \\frac{1}{2} \\alpha t^2", "x(t) = x_0 + v_0 t + \\frac{1}{2} at^2",
+             "v = \\frac{\\Delta x}{\\Delta t}", "s = ut + \\frac{1}{2}at^2", "KE = \\frac{1}{2}mv^2",
+             "PE = mgh", "\\Delta G = \\Delta H - T\\Delta S", "\\vec{E} = -\\nabla V",
+             "c = \\lambda f", "e^{i\\pi} + 1 = 0", "S = k \\log W",
+             ...Array(40).fill(0).map((_, i) => `x^{${i+1}} + y^{${i+1}} = z^{${i+1}}`)
+           ];
+         
+           const container = document.getElementById("mathRain");
+           const width = window.innerWidth;
+           const height = window.innerHeight;
+           const formulaCount = Math.floor(width / 30);
+           const elements = [];
+         
+           for (let i = 0; i < formulaCount; i++) {
+             const formula = formulas[Math.floor(Math.random() * formulas.length)];
+             const div = document.createElement("div");
+             div.className = "math";
+             let x = Math.random() * width;
+             let y = Math.random() * height;
+             div.style.left = `${x}px`;
+             div.style.top = `${y}px`;
+             div.dataset.baseX = x;
+             katex.render(formula, div, { throwOnError: false });
+             container.appendChild(div);
+         
+             setTimeout(() => {
+               div.style.opacity = "0.1";
+             }, 500 + Math.random() * 1000);
+         
+             elements.push({
+               el: div,
+               y: y,
+               baseX: x,
+               speed: 0.4 + Math.random() * 0.5,
+               offset: Math.random() * 50
+             });
+           }
+         
+           function animate() {
+             elements.forEach(obj => {
+               obj.y += obj.speed;
+               const sinX = 20 * Math.sin((obj.y + obj.offset) / 40);
+               const newX = obj.baseX + sinX;
+         
+               if (obj.y > height + 40) {
+                 obj.el.style.opacity = "0";
+                 obj.y = -50;
+                 obj.baseX = Math.random() * width;
+                 const newFormula = formulas[Math.floor(Math.random() * formulas.length)];
+                 katex.render(newFormula, obj.el, { throwOnError: false });
+                 obj.el.style.left = `${obj.baseX}px`;
+                 obj.el.style.top = `${obj.y}px`;
+                 obj.el.style.opacity = "0.1";
+               } else {
+                 obj.el.style.top = `${obj.y}px`;
+                 obj.el.style.left = `${newX}px`;
+               }
+             });
+             requestAnimationFrame(animate);
+           }
+         
+           animate();
+           
+         });
 
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
+        const listItems = document.querySelectorAll('li');
 
-        .container {
-            position: relative;
-            z-index: 1;
-            background-color: rgba(47, 43, 51, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            width: 400px;
-            margin: auto;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        h1 {
-            color: #afacac;
-            margin-bottom: 20px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            background-color: #1b0130;
-            color: white;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        li:hover {
-            background-color: #3f205c;
-        }
-        a {
-            text-decoration: none; 
-            color: black; 
-            padding: 5px; 
-            display: block; 
-        }
-
-        a:hover {
-            color: blue; 
-        }
-
-        .golang {
-            color: #afacac;
-            transition: color 0.3s; 
-        }
-
-        .golang:hover {
-            color: blue; 
-        }
-        .icon {
-            font-size: 1.5em;
-            color: #afacac; 
-        }
-    </style>
-</head>
-<body>
-    <div class="background">
-        <canvas id="backgroundCanvas"></canvas>
-    </div>
-    <div class="container">
-        <i class="fas fa-coffee icon"></i>
-        <h1><span class="golang">Golang</span> Backend Developer </h1>        
-        <ul>
-                    <li><a href="https://t.me/AnarchoNihilist" target="_blank"><i class="fab fa-telegram"></i> Telegram</a></li>
-                    <li><a href="https://github.com/AssassinRobot" target="_blank"><i class="fab fa-github"></i> Github</a></li>
-        </ul>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('backgroundCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const formulas = [
-            'E=mc²', 'a² + b² = c²', 'F=ma', '∫ x² dx',
-            '∑ (i=1 to n) i = n(n+1)/2', 'x̄ = (Σx) / n', 'PV=nRT',
-            'V = IR', 'd = vt', 'ΔE = mcΔT', 'A = πr²', 'C = 2πr',
-            'x = -b ± √(b² - 4ac) / 2a', 'F = G(m₁m₂)/r²', 'pH = -log[H⁺]',
-            'E = hf', 'λ = v/f', 'S = ut + (1/2)at²', 'Q = mcΔT',
-            'R = V/I', 'P = IV', 'K.E. = (1/2)mv²', 
-            'dy/dx = lim(h→0) [f(x+h) - f(x)]/h', '∫ e^x dx = e^x + C',
-            'f(x) = ax² + bx + c', 'y = mx + b', 
-            'sin²(θ) + cos²(θ) = 1', '∇·F = ρ/ε₀',
-            'd/dx (sin x) = cos x', '∫ sin x dx = -cos x + C',
-            'x(t) = x₀ + v₀t + (1/2)at²'
-        ];
-
-        const formulaObjects = [];
-
-        for (let i = 0; i < 100; i++) { 
-            const formulaIndex = Math.floor(Math.random() * formulas.length);
-            formulaObjects.push({
-                text: formulas[formulaIndex],
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                speed: Math.random() * 1 + 1
+        listItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+            } else {
+                listItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            }
             });
-        }
+        });
+      </script>
 
-        function drawBackground() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.font = '20px Arial';
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            formulaObjects.forEach(formulaObj => {
-                ctx.fillText(formulaObj.text, formulaObj.x, formulaObj.y);
-                
-                formulaObj.y += formulaObj.speed;
-
-                if (formulaObj.y > canvas.height) {
-                    formulaObj.y = -20; 
-                    formulaObj.x = Math.random() * canvas.width; 
-                }
-                
-                formulaObjects.forEach(other => {
-                    if (other !== formulaObj && Math.abs(formulaObj.y - other.y) < 20 && Math.abs(formulaObj.x - other.x) < 20) {
-                    formulaObj.x += Math.random() * 40 - 20;
-                    }
-                });
-                
-            });
-
-            requestAnimationFrame(drawBackground);
-        }
-
-        drawBackground();
-    </script>
-</body>
+   </body>
 </html>
